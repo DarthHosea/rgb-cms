@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Barryvdh\Debugbar\Facade as Debugbar;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        Debugbar::startMeasure('render', 'Time for rendering');
+        Debugbar::stopMeasure('render');
+        Debugbar::addMeasure('now', LARAVEL_START, microtime(true));
         $posts = Post::all();
 
         return view('home', ['posts' => $posts]);
